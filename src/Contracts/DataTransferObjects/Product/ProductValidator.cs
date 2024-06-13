@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace Contracts.DataTransferObjects.Product;
+namespace Contracts.DataTransferObjects;
 
 public class ProductValidator : AbstractValidator<Product>
 {
