@@ -1,18 +1,16 @@
 ﻿using System.Data;
 using System.Reflection;
-using Microsoft.EntityFrameworkCore;
+
+using Contracts.Abstractions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using FluentValidation;
 
+using FluentValidation;
+using Microsoft.EntityFrameworkCore;
 using MediatR;
 using Microsoft.Data.SqlClient;
 
-using Catalog.Domain.Abstractions;
-using Catalog.Infrastructure.Context;
-using Catalog.Infrastructure.Repositories;
-
-namespace CqrsDemo.CrossCutting.AppDependencies;
+namespace Catalog.CrossCutting;
 
 public static class DependencyInjection
 {
@@ -27,9 +25,7 @@ public static class DependencyInjection
             return connection;
         });
 
-        services.AddScoped<IMemberRepository, MemberRepository>();
         services.AddScoped<IUnityOfWork, UnityOfWork>();
-        services.AddScoped<IMemberDapperRepository, MemberDapperRepository>();
 
         var handlersAssembly = Assembly.Load("CqrsDemo.Application");
 
