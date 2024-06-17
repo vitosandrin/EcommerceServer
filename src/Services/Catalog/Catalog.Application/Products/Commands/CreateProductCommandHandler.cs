@@ -1,7 +1,6 @@
 ﻿using Contracts.Abstractions.CQRS;
 using Contracts.DataTransferObjects;
 using Contracts.Services.Catalog;
-using MediatR;
 
 namespace Catalog.Application.Products.Commands;
 
