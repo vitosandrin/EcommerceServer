@@ -20,18 +20,8 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
             .IsRequired();
 
         builder.HasData(
-            new Product
-            {
-                Name = "Produto 1",
-                Description = "Description1",
-                Price = 100
-            },
-            new Product
-            {
-                Name = "Produto 2",
-                Description = "Description2",
-                Price = 2232
-            }
+            new Product(1, "product0", "description0", 10),
+            new Product(2, "product1", "description1", 123)
         );
     }
 }
