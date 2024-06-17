@@ -1,13 +1,18 @@
-﻿using Contracts.DataTransferObjects;
+﻿using Contracts.Abstractions.CQRS;
+using Contracts.DataTransferObjects;
 using Contracts.Services.Catalog;
 using MediatR;
 
 namespace Catalog.Application.Products.Commands;
 
-internal class CreateProductCommandHandler : IRequestHandler<Command.CreateProduct, Command.Result.CreateProduct>
+internal class CreateProductCommandHandler : ICommandHandler<Command.CreateProduct, Command.Result.CreateProduct>
 {
-    public async Task<Command.Result.CreateProduct> Handle(Command.CreateProduct request, CancellationToken cancellationToken)
+    public async Task<Command.Result.CreateProduct> Handle(Command.CreateProduct command, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        var product = new Product(command.Name, command.Category, command.Description, command.Price);
+
+        Console.WriteLine($"Product {product.Name} created");
+
+        return new Command.Result.CreateProduct(1);
     }
 }
