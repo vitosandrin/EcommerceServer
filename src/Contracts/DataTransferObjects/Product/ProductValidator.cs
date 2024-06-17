@@ -17,5 +17,9 @@ public class ProductValidator : AbstractValidator<Product>
         RuleFor(product => product.Description)
             .NotNull()
             .NotEmpty();
+
+        RuleFor(product => product.Category)
+            .NotNull()
+            .NotEmpty();
     }
 }
