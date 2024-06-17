@@ -1,14 +1,13 @@
-﻿using MediatR;
-
+﻿using Contracts.Abstractions.CQRS;
 namespace Contracts.Services.Catalog;
 
 public class Command
 {
-    public record CreateProduct(string Name, string Description, List<string> Category, long Price) : IRequest<Result.CreateProduct>;
-    public record UpdateProduct(int Id, string Name, List<string> Category, string Description, long Price) : IRequest<int>;
-    public record DeleteProductById(int Id) : IRequest<int>;
-    public record GetProductById(int Id) : IRequest<int>;
-    public record GetProducts : IRequest<int>;
+    public record CreateProduct(string Name, string Description, List<string> Category, long Price) : ICommand<Result.CreateProduct>;
+    public record UpdateProduct(int Id, string Name, List<string> Category, string Description, long Price);
+    public record DeleteProductById(int Id);
+    public record GetProductById(int Id);
+    public record GetProducts;
 
     public class Result
     {
