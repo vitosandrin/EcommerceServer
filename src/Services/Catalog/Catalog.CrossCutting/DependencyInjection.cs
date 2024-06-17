@@ -28,7 +28,7 @@ public static class DependencyInjection
 
         services.AddScoped<IUnityOfWork, UnityOfWork>();
 
-        var handlersAssembly = Assembly.Load("CqrsDemo.Application");
+        var handlersAssembly = Assembly.Load("Catalog.Application");
 
         services.AddMediatR(cfg =>
         {
