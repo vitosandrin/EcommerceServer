@@ -1,9 +1,10 @@
 using Catalog.CrossCutting;
 
 var builder = WebApplication.CreateBuilder(args);
-var app = builder.Build();
 
 builder.Services.AddInfrastructure(builder.Configuration);
+
+var app = builder.Build();
 
 app.MapGet("/", () => "Hello World!");
 
