@@ -16,14 +16,12 @@ public static class DependencyInjection
         });
         services.AddValidatorsFromAssembly(assembly);
 
-        services.AddCarter();
-
         services.AddMarten(opts =>
         {
             opts.Connection(configuration.GetConnectionString("Database")!);
         }).UseLightweightSessions();
 
-        services.InitializeMartenWith<CatalogInitialData>();
+        // services.InitializeMartenWith<CatalogInitialData>();
         services.AddHealthChecks().AddNpgSql(configuration.GetConnectionString("Database")!);
 
         return services;
