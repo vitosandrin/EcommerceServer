@@ -1,17 +1,26 @@
-﻿using Contracts.Abstractions.CQRS;
-using Contracts.DataTransferObjects;
+﻿using Marten;
+
+using Contracts.Abstractions.CQRS;
 using Contracts.Services.Catalog;
+using Catalog.Domain.Entities;
 
 namespace Catalog.Application.Products.Commands;
 
-internal class CreateProductCommandHandler : ICommandHandler<Command.CreateProduct, Command.Result.CreateProduct>
+internal class CreateProductCommandHandler(IDocumentSession session) : ICommandHandler<Command.CreateProduct, Command.Result.CreateProduct>
 {
     public async Task<Command.Result.CreateProduct> Handle(Command.CreateProduct command, CancellationToken cancellationToken)
     {
-        var product = new Product(command.Name, command.Category, command.Description, command.Price);
+        var product = new Product
+        {
+            Name = command.Name,
+            Category = command.Category,
+            Description = command.Description,
+            Price = command.Price
+        };
 
-        Console.WriteLine($"Product {product.Name} created");
+        session.Store(product);
+        await session.SaveChangesAsync(cancellationToken);
 
-        return new Command.Result.CreateProduct(1);
+        return new Command.Result.CreateProduct(product.Id);
     }
 }
