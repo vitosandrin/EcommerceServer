@@ -1,4 +1,6 @@
-﻿namespace Catalog.CrossCutting;
+﻿using Catalog.API.Data;
+
+namespace Catalog.CrossCutting;
 
 public static class DependencyInjection
 {
@@ -20,6 +22,9 @@ public static class DependencyInjection
         {
             opts.Connection(configuration.GetConnectionString("Database")!);
         }).UseLightweightSessions();
+
+        services.InitializeMartenWith<CatalogInitialData>();
+        services.AddHealthChecks().AddNpgSql(configuration.GetConnectionString("Database")!);
 
         return services;
     }
