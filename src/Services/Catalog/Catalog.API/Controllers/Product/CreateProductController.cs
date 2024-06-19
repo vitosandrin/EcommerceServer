@@ -5,7 +5,6 @@ public class CreateProductController : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapGet("/test", () => "Hello TEST");
         app.MapPost("/products", async (Http.Request.CreateProduct request, ISender sender) =>
         {
             var command = request.Adapt<Command.CreateProduct>();
