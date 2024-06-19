@@ -21,7 +21,7 @@ public static class DependencyInjection
             opts.Connection(configuration.GetConnectionString("Database")!);
         }).UseLightweightSessions();
 
-        // services.InitializeMartenWith<CatalogInitialData>();
+        //services.InitializeMartenWith<CatalogInitialData>();
         services.AddHealthChecks().AddNpgSql(configuration.GetConnectionString("Database")!);
 
         return services;
