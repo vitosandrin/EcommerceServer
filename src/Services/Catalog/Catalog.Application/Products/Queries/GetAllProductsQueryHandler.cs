@@ -9,6 +9,7 @@ internal class GetAllProductsQueryHandler(IDocumentSession session) : IQueryHand
 {
     public async Task<Query.Result.GetAllProducts> Handle(Query.GetAllProducts query, CancellationToken cancellationToken)
     {
+        //TODO: ERROR AmbiguousDocumentTypeAliasesException (BECAUSE USING Product Contract AND Product Entity MAPPING TO SAME ALIAS)
         var products = await session.Query<Product>().ToListAsync(cancellationToken);
 
         return new Query.Result.GetAllProducts(products);
