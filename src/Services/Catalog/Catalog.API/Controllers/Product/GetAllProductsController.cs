@@ -9,7 +9,7 @@ public class GetAllProductsController : ICarterModule
         {
             var result = await sender.Send(new Query.GetAllProducts());
 
-            var response = result.Adapt<Query.Result.GetAllProducts>();
+            var response = result.Adapt<Http.Response.GetAllProducts>();
 
             return Results.Ok(response);
         })
