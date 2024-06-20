@@ -5,7 +5,7 @@ using Contracts.DataTransferObjects;
 
 using Marten;
 
-namespace Catalog.Application.Products.Querys;
+namespace Catalog.Application.Products.Queries;
 
 internal class GetProductByIdQueryHandler(IDocumentSession session) : IQueryHandler<Query.GetProductById, Query.Result.GetProductById>
 {

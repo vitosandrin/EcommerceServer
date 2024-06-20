@@ -10,6 +10,8 @@ public class Http
         public record GetAllProducts();
         public record GetProductById(Guid Id);
         public record GetProductByCategory(string Category);
+        public record DeleteProductById(Guid Id);
+        public record UpdateProduct(Guid Id, string Name, List<string> Category, string Description, long Price);
     }
     public class Response
     {
@@ -17,6 +19,7 @@ public class Http
         public record GetAllProducts(IEnumerable<Product> Products);
         public record GetProductById(Product Product);
         public record GetProductsByCategory(IEnumerable<Product> Products);
-
+        public record DeleteProductById(bool IsSuccess);
+        public record UpdateProduct(bool IsSuccess);
     }
 }

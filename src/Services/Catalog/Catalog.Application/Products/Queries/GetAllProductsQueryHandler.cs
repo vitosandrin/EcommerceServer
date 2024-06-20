@@ -3,7 +3,7 @@ using Contracts.DataTransferObjects;
 using Contracts.Services.Catalog;
 using Marten;
 
-namespace Catalog.Application.Products.Querys;
+namespace Catalog.Application.Products.Queries;
 
 internal class GetAllProductsQueryHandler(IDocumentSession session) : IQueryHandler<Query.GetAllProducts, Query.Result.GetAllProducts>
 {
