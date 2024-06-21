@@ -1,3 +1,9 @@
 ﻿namespace Contracts.DataTransferObjects;
-public record Product(Guid Id, string Name, List<string> Category, string Description, long Price);
-public record CreateProduct(string Name, string Description, List<string> Category, long Price);
+public class Product
+{
+    public Guid Id { get; set; }
+    public string Name { get; set; } = default!;
+    public List<string> Category { get; set; } = new();
+    public string Description { get; set; } = default!;
+    public decimal Price { get; set; }
+}
