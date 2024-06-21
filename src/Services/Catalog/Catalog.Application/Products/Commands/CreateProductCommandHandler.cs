@@ -1,15 +1,15 @@
-﻿using Marten;
-
-using Contracts.Abstractions.CQRS;
+﻿using Contracts.Abstractions.CQRS;
+using Contracts.DataTransferObjects;
 using Contracts.Services.Catalog;
-using Catalog.Domain.Entities;
-
+using Marten;
 namespace Catalog.Application.Products.Commands;
 
 internal class CreateProductCommandHandler(IDocumentSession session) : ICommandHandler<Command.CreateProduct, Command.Result.CreateProduct>
 {
     public async Task<Command.Result.CreateProduct> Handle(Command.CreateProduct command, CancellationToken cancellationToken)
     {
+        var product = new CreateProduct(command.Name, command.Description, command.Category, command.Price);
+        /*
         var product = new Product
         {
             Name = command.Name,
@@ -17,10 +17,11 @@ internal class CreateProductCommandHandler(IDocumentSession session) : ICommandH
             Description = command.Description,
             Price = command.Price
         };
+        */
 
         session.Store(product);
         await session.SaveChangesAsync(cancellationToken);
-
-        return new Command.Result.CreateProduct(product.Id);
+        //TODO
+        return new Command.Result.CreateProduct(new Guid());
     }
 }

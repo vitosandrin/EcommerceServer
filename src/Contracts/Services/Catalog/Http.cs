@@ -6,7 +6,7 @@ public class Http
 {
     public class Request
     {
-        public record CreateProduct(string Name, List<string> Category, string Description, string ImageFile, decimal Price);
+        public record CreateProduct(string Name, List<string> Category, string Description, decimal Price);
         public record GetAllProducts();
         public record GetProductById(Guid Id);
         public record GetProductByCategory(string Category);

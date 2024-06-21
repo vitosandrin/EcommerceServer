@@ -15,7 +15,7 @@ internal class DeleteProductByIdCommandHandler(IDocumentSession session) : IComm
         if (product is null)
             throw new NotFoundException($"Product with id {command.Id} not found.");
 
-        session.Delete(command.Id);
+        session.Delete<Product>(command.Id);
 
         await session.SaveChangesAsync(cancellationToken);
 
