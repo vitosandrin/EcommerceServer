@@ -6,15 +6,16 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
-        var assembly = Assembly.Load("Catalog.Application");
+        var handlersAssembly = Assembly.Load("Catalog.Application");
+        var validatorsAssembly = Assembly.Load("Contracts");
 
         services.AddMediatR(config =>
         {
-            config.RegisterServicesFromAssembly(assembly);
+            config.RegisterServicesFromAssembly(handlersAssembly);
             config.AddOpenBehavior(typeof(ValidationBehavior<,>));
             config.AddOpenBehavior(typeof(LoggingBehavior<,>));
         });
-        services.AddValidatorsFromAssembly(assembly);
+        services.AddValidatorsFromAssembly(validatorsAssembly);
 
         services.AddMarten(opts =>
         {
