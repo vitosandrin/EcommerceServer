@@ -1,4 +1,5 @@
 ﻿using Catalog.API.Data;
+using Contracts.Exceptions.Handler;
 
 namespace Catalog.CrossCutting;
 
@@ -22,6 +23,7 @@ public static class DependencyInjection
             opts.Connection(configuration.GetConnectionString("Database")!);
         }).UseLightweightSessions();
 
+        services.AddExceptionHandler<CustomExceptionHandler>();
         services.InitializeMartenWith<CatalogInitialData>();
         services.AddHealthChecks().AddNpgSql(configuration.GetConnectionString("Database")!);
 
