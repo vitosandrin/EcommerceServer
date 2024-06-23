@@ -15,9 +15,16 @@ internal class UpdateProductCommandHandler(IDocumentSession session) : ICommandH
         if (product is null)
             throw new NotFoundException($"Product with id {command.Id} not found.");
 
-        var productToUpdate = new Product(product.Id, command.Name, command.Category, command.Description, command.Price);
+        var productToUpdate = new Product()
+        {
+            Id = command.Id,
+            Name = command.Name,
+            Category = command.Category,
+            Description = command.Description,
+            Price = command.Price
+        };
 
-        session.Update(productToUpdate);
+        session.Update<Product>(productToUpdate);
         await session.SaveChangesAsync(cancellationToken);
 
         return new Command.Result.UpdateProduct(true);
