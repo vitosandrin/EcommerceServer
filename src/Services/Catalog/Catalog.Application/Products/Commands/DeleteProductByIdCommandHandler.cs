@@ -1,6 +1,6 @@
-﻿using Contracts.Abstractions.CQRS;
+﻿using Catalog.API.Exceptions;
+using Contracts.Abstractions.CQRS;
 using Contracts.DataTransferObjects;
-using Contracts.Exceptions;
 using Contracts.Services.Catalog;
 using Marten;
 
@@ -13,7 +13,7 @@ internal class DeleteProductByIdCommandHandler(IDocumentSession session) : IComm
         var product = await session.LoadAsync<Product>(command.Id, cancellationToken);
 
         if (product is null)
-            throw new NotFoundException($"Product with id {command.Id} not found.");
+            throw new ProductNotFoundException(command.Id);
 
         session.Delete<Product>(command.Id);
 

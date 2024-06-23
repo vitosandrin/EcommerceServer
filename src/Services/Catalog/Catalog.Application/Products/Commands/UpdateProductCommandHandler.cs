@@ -1,6 +1,6 @@
-﻿using Contracts.Abstractions.CQRS;
+﻿using Catalog.API.Exceptions;
+using Contracts.Abstractions.CQRS;
 using Contracts.DataTransferObjects;
-using Contracts.Exceptions;
 using Contracts.Services.Catalog;
 using Marten;
 
@@ -13,18 +13,14 @@ internal class UpdateProductCommandHandler(IDocumentSession session) : ICommandH
         var product = await session.LoadAsync<Product>(command.Id, cancellationToken);
 
         if (product is null)
-            throw new NotFoundException($"Product with id {command.Id} not found.");
+            throw new ProductNotFoundException(command.Id);
 
-        var productToUpdate = new Product()
-        {
-            Id = command.Id,
-            Name = command.Name,
-            Category = command.Category,
-            Description = command.Description,
-            Price = command.Price
-        };
+        product.Name = command.Name;
+        product.Category = command.Category;
+        product.Description = command.Description;
+        product.Price = command.Price;
 
-        session.Update<Product>(productToUpdate);
+        session.Update(product);
         await session.SaveChangesAsync(cancellationToken);
 
         return new Command.Result.UpdateProduct(true);
