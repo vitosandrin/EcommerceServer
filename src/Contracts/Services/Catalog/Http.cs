@@ -7,7 +7,7 @@ public class Http
     public class Request
     {
         public record CreateProduct(string Name, List<string> Category, string Description, decimal Price);
-        public record GetAllProducts();
+        public record GetAllProducts(int? PageNumber = 1, int? PageSize = 10);
         public record GetProductById(Guid Id);
         public record GetProductByCategory(string Category);
         public record DeleteProductById(Guid Id);

@@ -7,7 +7,9 @@ public class GetAllProductsController : ICarterModule
     {
         app.MapGet("/products", async ([AsParameters] Http.Request.GetAllProducts request, ISender sender) =>
         {
-            var result = await sender.Send(new Query.GetAllProducts());
+            var query = request.Adapt<Query.GetAllProducts>();
+
+            var result = await sender.Send(query);
 
             var response = result.Adapt<Http.Response.GetAllProducts>();
 
