@@ -5,14 +5,13 @@ using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddInfrastructure(builder.Configuration);
-
-//TODO - ERROR ON ROUTING WHEN USING CARTER IN DIFFERENT ASSEMBLY
-//SHOULD PASS CONFIG OPTIONS TO USECARTE WITH MODULE FROM API
 builder.Services.AddCarter();
 
 var app = builder.Build();
 
 app.MapCarter();
+
+app.UseExceptionHandler(options => { });
 
 app.UseHealthChecks("/health",
     new HealthCheckOptions
