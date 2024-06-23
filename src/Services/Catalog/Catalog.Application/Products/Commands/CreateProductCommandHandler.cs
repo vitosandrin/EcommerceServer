@@ -1,7 +1,7 @@
 ﻿using Contracts.Abstractions.CQRS;
+using Contracts.DataTransferObjects;
 using Contracts.Services.Catalog;
 using Marten;
-using Contracts.DataTransferObjects;
 namespace Catalog.Application.Products.Commands;
 
 internal class CreateProductCommandHandler(IDocumentSession session) : ICommandHandler<Command.CreateProduct, Command.Result.CreateProduct>
@@ -16,7 +16,7 @@ internal class CreateProductCommandHandler(IDocumentSession session) : ICommandH
             Price = command.Price
         };
 
-        session.Store<Product>(product);
+        session.Store(product);
         await session.SaveChangesAsync(cancellationToken);
         return new Command.Result.CreateProduct(product.Id);
     }
