@@ -1,10 +1,8 @@
 ﻿using Catalog.Domain.Abstractions;
 using Catalog.Infrastructure.Exceptions;
 using Contracts.DataTransferObjects;
-using Contracts.Exceptions;
 using Marten;
 using Marten.Pagination;
-using System.Threading;
 
 namespace Catalog.Infrastructure.Repositories;
 
