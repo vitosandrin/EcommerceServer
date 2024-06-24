@@ -1,5 +1,7 @@
 ﻿using Catalog.API.Data;
 using Contracts.Exceptions.Handler;
+using Catalog.Infrastructure.Repositories;
+using Catalog.Domain.Abstractions;
 
 namespace Catalog.CrossCutting;
 
@@ -22,6 +24,8 @@ public static class DependencyInjection
         {
             opts.Connection(configuration.GetConnectionString("Database")!);
         }).UseLightweightSessions();
+
+        services.AddScoped<IProductRepository, ProductRepository>();
 
         services.AddExceptionHandler<CustomExceptionHandler>();
         services.InitializeMartenWith<CatalogInitialData>();
