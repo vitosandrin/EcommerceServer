@@ -8,11 +8,13 @@ public class Http
     {
         public record GetBasket(string Username);
         public record StoreBasket(ShoppingCart Cart);
+        public record DeleteBasket(string UserName);
     }
 
     public class Response
     {
         public record GetBasket(ShoppingCart Cart);
         public record StoreBasket(string UserName);
+        public record DeleteBasket(bool IsSuccess);
     }
 }

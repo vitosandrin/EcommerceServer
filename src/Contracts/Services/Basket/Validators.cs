@@ -12,4 +12,14 @@ public class Validators
             RuleFor(x => x.Cart.UserName).NotEmpty().WithMessage("UserName is requited");
         }
     }
+
+    public class DeleteBasketCommandValidator : AbstractValidator<Command.DeleteBasket>
+    {
+        public DeleteBasketCommandValidator()
+        {
+            RuleFor(x => x.UserName).NotEmpty().WithMessage("UserName is requited");
+        }
+    }
+
+
 }
