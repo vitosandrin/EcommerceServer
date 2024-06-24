@@ -2,13 +2,19 @@
 
 public class GetBasketController : ICarterModule
 {
-    public void AddRoutes(IRouteBuilder routeBuilder)
+    public void AddRoutes(IEndpointRouteBuilder app)
     {
-        routeBuilder.Get("basket", async () =>
+        app.MapGet("/basket/{userName}", async (string userName, ISender sender) =>
         {
-            var username = routeData.Get<string>("username");
-            var response = await req.SendRequestAsync<Http.Response.GetBasket>(Http.Request.GetBasket(username));
-            return res.WriteAsJsonAsync(response.Cart);
-        });
+            var result = await sender.Send(new Query.GetBasket(userName));
+
+            var response = result.Adapt<Http.Response.GetBasket>();
+
+            return Results.Ok(response);
+        }).WithName("GetBasketByUserName")
+        .Produces<Http.Response.GetBasket>(StatusCodes.Status200OK)
+        .ProducesProblem(StatusCodes.Status400BadRequest)
+        .WithSummary("Get Basket  By UserName")
+        .WithDescription("Get Basket  By UserName");
     }
 }
