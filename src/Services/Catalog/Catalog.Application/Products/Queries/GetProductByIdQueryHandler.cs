@@ -1,20 +1,15 @@
 ﻿using Contracts.Abstractions.CQRS;
-using Contracts.Exceptions;
 using Contracts.Services.Catalog;
-using Contracts.DataTransferObjects;
-
-using Marten;
+using Catalog.Domain.Abstractions;
 
 namespace Catalog.Application.Products.Queries;
 
-internal class GetProductByIdQueryHandler(IDocumentSession session) : IQueryHandler<Query.GetProductById, Query.Result.GetProductById>
+internal class GetProductByIdQueryHandler(IProductRepository repository) : IQueryHandler<Query.GetProductById, Query.Result.GetProductById>
 {
+    private readonly IProductRepository _repository = repository;
     public async Task<Query.Result.GetProductById> Handle(Query.GetProductById query, CancellationToken cancellationToken)
     {
-        var product = await session.LoadAsync<Product>(query.Id, cancellationToken);
-
-        if (product is null)
-            throw new NotFoundException($"Product with id {query.Id} not found.");
+        var product = await _repository.GetProductById(query.Id, cancellationToken);
 
         return new Query.Result.GetProductById(product);
     }

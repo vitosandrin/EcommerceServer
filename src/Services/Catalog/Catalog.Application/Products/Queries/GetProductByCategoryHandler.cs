@@ -1,18 +1,15 @@
 ﻿using Contracts.Abstractions.CQRS;
 using Contracts.Services.Catalog;
-using Contracts.DataTransferObjects;
-
-using Marten;
+using Catalog.Domain.Abstractions;
 
 namespace Catalog.Application.Products.Queries;
 
-internal class GetProductByCategoryHandler(IDocumentSession session) : IQueryHandler<Query.GetProductsByCategory, Query.Result.GetProductsByCategory>
+internal class GetProductByCategoryHandler(IProductRepository repository) : IQueryHandler<Query.GetProductsByCategory, Query.Result.GetProductsByCategory>
 {
+    private readonly IProductRepository _repository = repository;
     public async Task<Query.Result.GetProductsByCategory> Handle(Query.GetProductsByCategory query, CancellationToken cancellationToken)
     {
-        var products = await session.Query<Product>()
-                   .Where(p => p.Category.Contains(query.Category))
-                   .ToListAsync(cancellationToken);
+        var products = await _repository.GetProductByCategory(query.Category, cancellationToken);
 
         return new Query.Result.GetProductsByCategory(products);
     }

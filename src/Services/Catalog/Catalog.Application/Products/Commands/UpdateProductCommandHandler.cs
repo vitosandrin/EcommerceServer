@@ -1,28 +1,26 @@
-﻿using Catalog.API.Exceptions;
+﻿using Catalog.Domain.Abstractions;
 using Contracts.Abstractions.CQRS;
 using Contracts.DataTransferObjects;
 using Contracts.Services.Catalog;
-using Marten;
 
 namespace Catalog.Application.Products.Commands;
 
-internal class UpdateProductCommandHandler(IDocumentSession session) : ICommandHandler<Command.UpdateProduct, Command.Result.UpdateProduct>
+internal class UpdateProductCommandHandler(IProductRepository repository) : ICommandHandler<Command.UpdateProduct, Command.Result.UpdateProduct>
 {
+    private readonly IProductRepository _repository = repository;
     public async Task<Command.Result.UpdateProduct> Handle(Command.UpdateProduct command, CancellationToken cancellationToken)
     {
-        var product = await session.LoadAsync<Product>(command.Id, cancellationToken);
+        var product = new Product
+        {
+            Id = command.Id,
+            Name = command.Name,
+            Category = command.Category,
+            Description = command.Description,
+            Price = command.Price
+        };
 
-        if (product is null)
-            throw new ProductNotFoundException(command.Id);
+        var result = await _repository.UpdateProduct(product, cancellationToken);
 
-        product.Name = command.Name;
-        product.Category = command.Category;
-        product.Description = command.Description;
-        product.Price = command.Price;
-
-        session.Update(product);
-        await session.SaveChangesAsync(cancellationToken);
-
-        return new Command.Result.UpdateProduct(true);
+        return new Command.Result.UpdateProduct(result);
     }
 }

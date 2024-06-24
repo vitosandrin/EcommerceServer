@@ -1,11 +1,12 @@
-﻿using Contracts.Abstractions.CQRS;
+﻿using Catalog.Domain.Abstractions;
+using Contracts.Abstractions.CQRS;
 using Contracts.DataTransferObjects;
 using Contracts.Services.Catalog;
-using Marten;
 namespace Catalog.Application.Products.Commands;
 
-internal class CreateProductCommandHandler(IDocumentSession session) : ICommandHandler<Command.CreateProduct, Command.Result.CreateProduct>
+internal class CreateProductCommandHandler(IProductRepository repository) : ICommandHandler<Command.CreateProduct, Command.Result.CreateProduct>
 {
+    private readonly IProductRepository _repository = repository;
     public async Task<Command.Result.CreateProduct> Handle(Command.CreateProduct command, CancellationToken cancellationToken)
     {
         var product = new Product
@@ -16,8 +17,8 @@ internal class CreateProductCommandHandler(IDocumentSession session) : ICommandH
             Price = command.Price
         };
 
-        session.Store(product);
-        await session.SaveChangesAsync(cancellationToken);
-        return new Command.Result.CreateProduct(product.Id);
+        var result = await _repository.CreateProduct(product, cancellationToken);
+
+        return new Command.Result.CreateProduct(result);
     }
 }
