@@ -18,4 +18,3 @@ public class DeleteBasketController : ICarterModule
         .WithDescription("Delete Basket");
     }
 }
-}

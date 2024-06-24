@@ -7,6 +7,6 @@ internal class StoreBasketCommandHandler : ICommandHandler<Command.StoreBasket, 
 {
     public async Task<Command.Result.StoreBasket> Handle(Command.StoreBasket command, CancellationToken cancellationToken)
     {
-        return new Command.Result.StoreBasket(true);
+        return new Command.Result.StoreBasket("ok");
     }
 }
