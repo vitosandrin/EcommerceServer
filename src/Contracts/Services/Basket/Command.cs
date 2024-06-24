@@ -8,6 +8,6 @@ public class Command
     public record StoreBasket(ShoppingCart Cart) : ICommand<Result.StoreBasket>;
     public class Result
     {
-        public record StoreBasket(bool IsSuccess);
+        public record StoreBasket(string UserName);
     }
 }
