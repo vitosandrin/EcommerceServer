@@ -6,6 +6,9 @@ public static class DependencyInjection
         var handlersAssembly = Assembly.Load("Basket.Application");
         var validatorsAssembly = Assembly.Load("Contracts");
 
+        services.AddScoped<IBasketRepository, BasketRepository>();
+        services.Decorate<IBasketRepository, CachedBasketRepository>();
+
         services.AddMediatR(config =>
         {
             config.RegisterServicesFromAssembly(handlersAssembly);
@@ -20,8 +23,10 @@ public static class DependencyInjection
             opts.Schema.For<ShoppingCart>().Identity(x => x.UserName);
         }).UseLightweightSessions();
 
-        services.AddScoped<IBasketRepository, BasketRepository>();
-        services.Decorate<IBasketRepository, CachedBasketRepository>();
+        services.AddStackExchangeRedisCache(options =>
+        {
+            options.Configuration = configuration.GetConnectionString("Redis");
+        });
 
         services.AddHealthChecks().AddNpgSql(configuration.GetConnectionString("Database")!);
         return services;
