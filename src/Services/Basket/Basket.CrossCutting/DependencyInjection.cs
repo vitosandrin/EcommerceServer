@@ -28,7 +28,10 @@ public static class DependencyInjection
             options.Configuration = configuration.GetConnectionString("Redis");
         });
 
-        services.AddHealthChecks().AddNpgSql(configuration.GetConnectionString("Database")!);
+        services.AddHealthChecks()
+            .AddNpgSql(configuration.GetConnectionString("Database")!)
+            .AddRedis(configuration.GetConnectionString("Redis")!);
+
         return services;
     }
 }
