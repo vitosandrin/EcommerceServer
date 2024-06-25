@@ -9,8 +9,8 @@ internal class StoreBasketCommandHandler(IBasketRepository repository) : IComman
     private readonly IBasketRepository _basketRepository = repository;
     public async Task<Command.Result.StoreBasket> Handle(Command.StoreBasket command, CancellationToken cancellationToken)
     {
-        await _basketRepository.StoreBasket(command.Cart, cancellationToken);
+        var basket = await _basketRepository.StoreBasket(command.Cart, cancellationToken);
 
-        return new Command.Result.StoreBasket(command.Cart.UserName);
+        return new Command.Result.StoreBasket(basket);
     }
 }

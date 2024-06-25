@@ -12,7 +12,7 @@ public class StoreBasketController : ICarterModule
 
             var response = result.Adapt<Http.Response.StoreBasket>();
 
-            return Results.Created($"/basket/{response.UserName}", response);
+            return Results.Created($"/basket/{response.Cart.UserName}", response);
 
         }).WithName("StoreBasket")
         .Produces<Http.Response.StoreBasket>(StatusCodes.Status201Created)

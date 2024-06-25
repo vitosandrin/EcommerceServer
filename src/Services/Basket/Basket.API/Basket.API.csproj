@@ -12,6 +12,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="..\Basket.Application\Basket.Application.csproj" />
 		<ProjectReference Include="..\Basket.CrossCutting\Basket.CrossCutting.csproj" />
 	</ItemGroup>
 </Project>

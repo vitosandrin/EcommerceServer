@@ -14,7 +14,7 @@ public class Http
     public class Response
     {
         public record GetBasket(ShoppingCart Cart);
-        public record StoreBasket(string UserName);
+        public record StoreBasket(ShoppingCart Cart);
         public record DeleteBasket(bool IsSuccess);
     }
 }

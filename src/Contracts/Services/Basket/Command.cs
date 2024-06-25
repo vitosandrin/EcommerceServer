@@ -9,7 +9,7 @@ public class Command
     public record DeleteBasket(string UserName) : ICommand<Result.DeleteBasket>;
     public class Result
     {
-        public record StoreBasket(string UserName);
+        public record StoreBasket(ShoppingCart Cart);
         public record DeleteBasket(bool IsSuccess);
     }
 }

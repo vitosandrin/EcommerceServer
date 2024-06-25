@@ -14,7 +14,6 @@ public static class DependencyInjection
         });
         services.AddValidatorsFromAssembly(validatorsAssembly);
         services.AddExceptionHandler<CustomExceptionHandler>();
-
         services.AddMarten(opts =>
         {
             opts.Connection(configuration.GetConnectionString("Database")!);
