@@ -1,6 +1,4 @@
-﻿using Contracts.DataTransferObjects;
-
-namespace Basket.CrossCutting;
+﻿namespace Basket.CrossCutting;
 public static class DependencyInjection
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
@@ -23,8 +21,9 @@ public static class DependencyInjection
             opts.Schema.For<ShoppingCart>().Identity(x => x.UserName);
         }).UseLightweightSessions();
 
-        services.AddHealthChecks().AddNpgSql(configuration.GetConnectionString("Database")!);
+        services.AddScoped<IBasketRepository, BasketRepository>();
 
+        services.AddHealthChecks().AddNpgSql(configuration.GetConnectionString("Database")!);
         return services;
     }
 }
