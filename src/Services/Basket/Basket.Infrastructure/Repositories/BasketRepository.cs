@@ -1,4 +1,4 @@
-﻿using Basket.Infrastructure.Abstractions;
+﻿using Basket.Domain.Abstractions;
 using Basket.Infrastructure.Exceptions;
 using Contracts.DataTransferObjects;
 using Marten;

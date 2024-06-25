@@ -1,6 +1,6 @@
 ﻿using Contracts.DataTransferObjects;
 
-namespace Basket.Infrastructure.Abstractions;
+namespace Basket.Domain.Abstractions;
 
 public interface IBasketRepository
 {
