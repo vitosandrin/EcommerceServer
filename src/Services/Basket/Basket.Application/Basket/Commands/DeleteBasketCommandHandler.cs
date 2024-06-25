@@ -9,8 +9,8 @@ internal class DeleteBasketCommandHandler(IBasketRepository repository) : IComma
     private readonly IBasketRepository _basketRepository = repository;
     public async Task<Command.Result.DeleteBasket> Handle(Command.DeleteBasket command, CancellationToken cancellationToken)
     {
-        await _basketRepository.DeleteBasket(command.UserName, cancellationToken);
+        var isDeleted = await _basketRepository.DeleteBasket(command.UserName, cancellationToken);
 
-        return new Command.Result.DeleteBasket(true);
+        return new Command.Result.DeleteBasket(isDeleted);
     }
 }
