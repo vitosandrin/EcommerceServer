@@ -21,6 +21,7 @@ public static class DependencyInjection
         }).UseLightweightSessions();
 
         services.AddScoped<IBasketRepository, BasketRepository>();
+        services.Decorate<IBasketRepository, CachedBasketRepository>();
 
         services.AddHealthChecks().AddNpgSql(configuration.GetConnectionString("Database")!);
         return services;
