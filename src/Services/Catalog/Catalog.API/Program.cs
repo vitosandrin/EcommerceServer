@@ -1,18 +1,16 @@
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddInfrastructure(builder.Configuration);
+builder.Services.AddInfrastructure();
+builder.Services.AddRepositories();
+builder.Services.AddDatabase(builder.Configuration);
+
+//TODO - ADD ASSEMBLY FOR CARTER O DI LAYER
 builder.Services.AddCarter();
 
 var app = builder.Build();
 
 app.MapCarter();
 
-app.UseExceptionHandler(options => { });
-
-app.UseHealthChecks("/health",
-    new HealthCheckOptions
-    {
-        ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
-    });
+app.SetupServices();
 
 app.Run();
