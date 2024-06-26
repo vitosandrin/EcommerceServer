@@ -1,9 +1,6 @@
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddInfrastructure();
-builder.Services.AddRepositories();
-builder.Services.AddDatabase(builder.Configuration);
-
+builder.Services.AddInfrastructure(builder.Configuration);
 //TODO - ADD ASSEMBLY FOR CARTER O DI LAYER
 builder.Services.AddCarter();
 

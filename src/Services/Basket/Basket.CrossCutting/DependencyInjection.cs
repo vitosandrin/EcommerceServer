@@ -1,8 +1,14 @@
-﻿namespace Basket.CrossCutting;
+﻿using Discount.gRPC;
+
+namespace Basket.CrossCutting;
 public static class DependencyInjection
 {
-    public static IServiceCollection AddInfrastructure(this IServiceCollection services)
+    public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
+        services.AddRepositories();
+        services.AddDatabase(configuration);
+        services.ConfigGrpc(configuration);
+
         var handlersAssembly = Assembly.Load("Basket.Application");
         var validatorsAssembly = Assembly.Load("Contracts");
 
@@ -18,14 +24,14 @@ public static class DependencyInjection
         return services;
     }
 
-    public static IServiceCollection AddRepositories(this IServiceCollection services)
+    private static IServiceCollection AddRepositories(this IServiceCollection services)
     {
         services.AddScoped<IBasketRepository, BasketRepository>();
         services.Decorate<IBasketRepository, CachedBasketRepository>();
         return services;
     }
 
-    public static IServiceCollection AddDatabase(this IServiceCollection services, IConfiguration configuration)
+    private static IServiceCollection AddDatabase(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddMarten(opts =>
         {
@@ -41,6 +47,24 @@ public static class DependencyInjection
         services.AddHealthChecks()
             .AddNpgSql(configuration.GetConnectionString("Database")!)
             .AddRedis(configuration.GetConnectionString("Redis")!);
+
+        return services;
+    }
+
+    private static IServiceCollection ConfigGrpc(this IServiceCollection services, IConfiguration configuration)
+    {
+        services.AddGrpcClient<DiscountProtoService.DiscountProtoServiceClient>(options =>
+        {
+            options.Address = new Uri(configuration["GrpcSettings:DiscountUrl"]!);
+        }).ConfigurePrimaryHttpMessageHandler(() =>
+        {
+            var handler = new HttpClientHandler
+            {
+                ServerCertificateCustomValidationCallback =
+                HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+            };
+            return handler;
+        });
 
         return services;
     }

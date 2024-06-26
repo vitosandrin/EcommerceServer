@@ -1,10 +1,16 @@
 ﻿namespace Contracts.DataTransferObjects;
-public record ShoppingCartItem(int Quantity, string Color, long Price, Guid ProductId, string ProductName);
-public record ShoppingCart(string UserName, List<ShoppingCartItem> Items)
+public class ShoppingCartItem
 {
-    public decimal TotalPrice => Items.Sum(x => x.Price * x.Quantity);
-
-    public ShoppingCart() : this(string.Empty, new List<ShoppingCartItem>())
-    {
-    }
+    public int Quantity { get; set; }
+    public string Color { get; set; } = default!;
+    public long Price { get; set; }
+    public Guid ProductId { get; set; }
+    public string ProductName { get; set; } = default!;
 }
+public class ShoppingCart
+{
+    public string UserName { get; set; } = default!;
+    public List<ShoppingCartItem> Items { get; set; } = default!;
+    public decimal TotalPrice => Items.Sum(x => x.Price * x.Quantity);
+}
+
