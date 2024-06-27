@@ -28,6 +28,7 @@ internal class StoreBasketCommandHandler
         {
             var coupon = await _proto.GetDiscountAsync(new GetDiscountRequest { ProductName = item.ProductName }, cancellationToken: cancellationToken);
             item.Price -= coupon.Amount;
+            item.Discount = coupon.Amount;
         }
     }
 }
