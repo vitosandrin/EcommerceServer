@@ -1,6 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Discount.gRPC.Data;
+using Microsoft.EntityFrameworkCore;
 
-namespace Discount.gRPC.Data;
+namespace Discount.gRPC;
 public static class Extensions
 {
     public static IApplicationBuilder UseMigration(this IApplicationBuilder app)

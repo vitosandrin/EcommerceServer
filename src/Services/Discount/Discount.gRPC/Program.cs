@@ -1,3 +1,4 @@
+using Discount.gRPC;
 using Discount.gRPC.Abstractions;
 using Discount.gRPC.Data;
 using Discount.gRPC.Services;

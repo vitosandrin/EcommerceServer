@@ -1,8 +1,4 @@
-﻿using HealthChecks.UI.Client;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Diagnostics.HealthChecks;
-
-namespace Basket.CrossCutting;
+﻿namespace Basket.CrossCutting;
 
 public static class Setup
 {
