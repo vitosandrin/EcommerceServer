@@ -1,9 +1,8 @@
-﻿using Marten;
+﻿using Contracts.DataTransferObjects;
+using Marten;
 using Marten.Schema;
 
-using Contracts.DataTransferObjects;
-
-namespace Catalog.API.Data;
+namespace Catalog.Infrastructure.Data;
 
 public class CatalogInitialData : IInitialData
 {
