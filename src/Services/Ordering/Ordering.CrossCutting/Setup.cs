@@ -1,4 +1,4 @@
-﻿namespace Catalog.CrossCutting;
+﻿namespace Ordering.CrossCutting;
 
 public static class Setup
 {
