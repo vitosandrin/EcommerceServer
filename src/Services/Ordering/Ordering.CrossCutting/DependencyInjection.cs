@@ -40,6 +40,8 @@ public static class DependencyInjection
             options.UseSqlServer(connectionString);
         });
 
+        //services.AddHealthChecks().AddSqlServer(connectionString);
+
         services.AddScoped<IApplicationDbContext, ApplicationDbContext>();
         return services;
     }
