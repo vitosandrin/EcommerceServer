@@ -32,10 +32,12 @@ public static class DependencyInjection
 
     public static IServiceCollection AddDatabase(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddDbContext<ApplicationDbContext>((sp, options) =>
+        var connectionString = configuration.GetConnectionString("Database");
+
+        services.AddDbContext<ApplicationDbContext>(options =>
         {
             // options.AddInterceptors(sp.GetServices<ISaveChangesInterceptor>());
-            options.UseSqlServer(configuration.GetConnectionString("Database"));
+            options.UseSqlServer(connectionString);
         });
 
         services.AddScoped<IApplicationDbContext, ApplicationDbContext>();
