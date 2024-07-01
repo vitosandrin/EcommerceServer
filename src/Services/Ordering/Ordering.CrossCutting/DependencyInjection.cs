@@ -1,15 +1,16 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Ordering.Infrastructure.Abstractions;
-using Ordering.Infrastructure.Data;
-
-namespace Ordering.CrossCutting;
-
+﻿namespace Ordering.CrossCutting;
 public static class DependencyInjection
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
+        services.AddApiServices();
         services.AddDatabase(configuration);
 
+        return services;
+    }
+
+    public static IServiceCollection AddApiServices(this IServiceCollection services)
+    {
         var handlersAssembly = Assembly.Load("Ordering.Application");
         var validatorsAssembly = Assembly.Load("Contracts");
 
@@ -34,15 +35,16 @@ public static class DependencyInjection
     {
         var connectionString = configuration.GetConnectionString("Database");
 
-        services.AddDbContext<ApplicationDbContext>(options =>
+        services.AddDbContext<ApplicationDbContext>((sp, options) =>
         {
-            // options.AddInterceptors(sp.GetServices<ISaveChangesInterceptor>());
+            options.AddInterceptors(sp.GetServices<ISaveChangesInterceptor>());
             options.UseSqlServer(connectionString);
         });
 
-        //services.AddHealthChecks().AddSqlServer(connectionString);
+        services.AddHealthChecks().AddSqlServer(connectionString!);
 
         services.AddScoped<IApplicationDbContext, ApplicationDbContext>();
+
         return services;
     }
 
