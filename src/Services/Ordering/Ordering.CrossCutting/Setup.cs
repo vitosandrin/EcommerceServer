@@ -11,8 +11,6 @@ public static class Setup
            {
                ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
            });
-
-
         return app;
     }
 }
